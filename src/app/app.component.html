@@ -1,0 +1,61 @@
+<div class="container-fluid">
+  <div class="header-container">
+    <div class="row">
+      <div class="col-md-12 header-title"><h1>Task Tracker</h1></div>
+      <div class="col-md-12 header-sub-title grey-text">v2.0</div>
+    </div>
+  </div>
+  <div class="body-container">
+    <div class="row">
+      <div class="col-md-6 pad-right-5">
+        <div class="create-task-container">
+          <form name="form" (ngSubmit)="f.valid && createTask(f)" #f="ngForm" novalidate>
+            <div class="heading">Create a Task</div>
+            <div *ngIf="taskCreated" class="text-success">Task Created Successfully!</div>
+            <div class="form-group">
+              <label for="taskName">Task Name</label>
+              <input id="taskName" type="text" name="taskName" #taskName="ngModel" [(ngModel)]="task.name" class="form-control" required>
+              <div *ngIf="f.submitted && taskName.invalid" class="text-danger">
+                  <div *ngIf="taskName.errors.required">Task Name is required</div>
+              </div>
+            </div>
+            <div class="form-group">
+                <label for="taskDate">Date</label>
+                <input id="taskDate" type="text" name="taskDate" #taskDate="ngModel" [(ngModel)]="task.date" class="form-control" required>
+                <div *ngIf="f.submitted && taskDate.invalid" class="text-danger">
+                    <div *ngIf="taskDate.errors.required">Date is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="taskAssignedTo">Assigned To</label>
+                <input id="taskAssignedTo" type="text" name="taskAssignedTo" #taskAssignedTo="ngModel" [(ngModel)]="task.assigned" class="form-control" required>
+                <div *ngIf="f.submitted && taskAssignedTo.invalid" class="text-danger">
+                    <div *ngIf="taskAssignedTo.errors.required">Assigned To is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+              <button type="submit" name="submit" class="btn btn-dark">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-6 pad-left-5 pad-mobile">
+        <div class="task-list-container">
+          <div class="heading">Existing Tasks</div>
+          <div class="tasks-container">
+             <div class="row task-row" *ngFor="let task of tasks; let i = index;">
+                <div class="col-6 col-md-7 pad-right-zero">{{task.name}} <span class="grey-text small-font">{{task.date}}</span></div>
+                <div class="col-4 col-md-4 pad-left-zero text-right">{{task.assigned}}</div>
+                <div class="col-2 col-md-1 pad-left-zero text-right remove-icon">
+                    <button type="button" class="close" aria-label="Close" (click)="removeTask(i)">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-container"></div>
+</div>
